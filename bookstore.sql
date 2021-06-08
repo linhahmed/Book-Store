@@ -85,7 +85,7 @@ CREATE TRIGGER placeOrders AFTER UPDATE ON book
 FOR EACH ROW
 begin
     if new.Quantity < old.Min_Quantity then
-		insert into orders values (old.ISBN, old.Min_Quantity - new.Quantity);
+		insert into orders values (old.ISBN, old.Min_Quantity * 1.5 - new.Quantity);
     end if;
 end $$
 delimiter ;

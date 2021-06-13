@@ -20,7 +20,7 @@ public class Manager extends Customer {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "Hosney4444!");
             ResultSet myRs = null;
             String query = "insert into book values( " + "'" + ISBN + "','" + Title + "','" + Publisher + "','" +
-                    Publication_Year + "'," + Quantity + "," + Min_Quantity + "," + Price + ",'" + Category + "';";
+                    Publication_Year + "'," + Quantity + "," + Min_Quantity + "," + Price + ",'" + Category + "' );";
             Statement stmt = connection.createStatement();
             stmt.executeUpdate(query);
             connection.close();
@@ -221,6 +221,22 @@ public class Manager extends Customer {
 	        }
 		return res;
 	}
+    public void confirm(String ISBN) {
+    	List<String> res = new ArrayList<>();
+		String query="";
+		try {
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "741963654");
+			Statement sta = connection.createStatement();
+			ResultSet myRs = null ;
+				query = "delete from orders where ISBN = "+"'" + ISBN + "'" + ";";
+				 sta.executeUpdate(query);
+			
+			 connection.close();
+			}
+			catch (Exception exception) {
+	            exception.printStackTrace();
+	        }
+    }
 
 
 }

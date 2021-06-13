@@ -8,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Customer {
 	private String username;
@@ -19,6 +21,13 @@ public class Customer {
 	private String address;
 	private int isManager;
 	List<Pair<String,Integer>> cart=new ArrayList<>();  // list of ISBNs
+	
+	public void set_UserName(String name) {
+		username = name;
+	}
+	public String get_UserName() {
+		return username;
+	}
 	
 	public void set_isManager(int bit) {
 		isManager = bit;
@@ -128,6 +137,8 @@ public class Customer {
 	        }
 		return res;
 	}
+	
+	
 	public long total_price () {
 		long res= 0;
 		try {
@@ -158,10 +169,15 @@ public class Customer {
 			
 			while(cart.size()>0) {
 				int cartquantity=cart.get(0).right;
-				String query = "Update book set Quantity=Quantity -"+"'"+cartquantity+"'"+ "where ISBN = "  + "'" + cart.get(0).left+ "'" + ";";
+				String query1 = "Update book set Quantity=Quantity -"+"'"+cartquantity+"'"+ "where ISBN = "  + "'" + cart.get(0).left+ "'" + ";";
+				String query2 = "insert into sales values( " + "'" + username + "','" + cart.get(0).left +
+						"','" + cartquantity +  "',' " + LocalDateTime.now() +" ') ;";
+	                   
 				Statement sta = connection.createStatement();
-				sta.executeUpdate(query);
+				sta.executeUpdate(query1);
+				sta.executeUpdate(query2);
 				cart.remove(0);
+				
 			}
 			 connection.close();
 			}
@@ -169,4 +185,9 @@ public class Customer {
 	            exception.printStackTrace();
 	        }
 	}
+	
+	public void log_out() {
+		cart.clear();
+	}
+	
 }

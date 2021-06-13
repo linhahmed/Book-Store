@@ -1,14 +1,9 @@
-package book_store;
+package com.company;
 import java.util.*;
 
 import com.mysql.cj.conf.ConnectionUrlParser.Pair;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
+import java.sql.*;
 import java.time.LocalDateTime;
 
 public class Customer {
@@ -185,6 +180,7 @@ public class Customer {
 	            exception.printStackTrace();
 	        }
 	}
+
 	
 	public void log_out() {
 		cart.clear();

@@ -34,6 +34,20 @@ public class Manager extends Customer {
         }
 
     }
+    public void add_publisher(String PName, String Address, String Phone) {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "Hosney4444!");
+            Statement stmt = connection.createStatement();
+            ResultSet myRs = null;
+            String query = "insert into publisher values( " + "'" + PName + "','" + Address + "','" + Phone + "');" ;
+            stmt.executeUpdate(query);
+            connection.close();
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+    }
 
     public boolean modify_existing_book(String ISBN, int sold) {
         try {

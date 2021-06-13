@@ -36,7 +36,7 @@ fname varchar(100) not null,
 email varchar(100) not null,
 phonenum varchar(20) not null,
 shippingAddress varchar(100) not null,
-ismanager bit not null /*0 -> customer , 1 -> manager*/
+ismanager boolean not null /*0 -> customer , 1 -> manager*/
 );
 
 create table sales(
@@ -84,10 +84,14 @@ delimiter $$
 CREATE TRIGGER placeOrders AFTER UPDATE ON book 
 FOR EACH ROW
 begin
-    if new.Quantity < old.Min_Quantity then
+  if new.Quantity < old.Min_Quantity then
+    if not exists(select * from orders where ISBN = new.ISBN)  then
 		insert into orders values (old.ISBN, old.Min_Quantity * 1.5 - new.Quantity);
+	else 
+		update orders set Quantity = old.Min_Quantity * 1.5 - new.Quantity where new.ISBN= old.ISBN;
     end if;
-end $$
+    end if;
+end $$ 
 delimiter ;
 
 
@@ -97,6 +101,7 @@ FOR EACH ROW
 begin
     update book set book.Quantity = book.Quantity + old.Quantity
     where book.ISBN = old.ISBN;
+   
 end $$ 
 delimiter ;
 
@@ -104,4 +109,18 @@ delimiter ;
 insert into publisher values ('Aya','10 mahmodya st vectoria','0115698714');
 insert into publisher values ('Nada','11 mahmodya st vectoria','0102369741');
 insert into publisher values ('Linh','13 mahmodya st vectoria','0120955526');
-insert into book values ('Nada','11 mahmodya st vectoria','0102369741');
+insert into book values ('84465436','nowoman','Linh','1967-07-08', '40' , '20','1000','comedy');
+insert into book values ('984','proceed','Linh','1967-07-08', '40' , '20','1000','comedy');
+insert into book values ('33','kkkk','Linh','1967-07-08', '40' , '20','1000','comedy');
+insert into users values ('zenab', '8374645','jfir', 'reiii' , 'nada863@gmail','946664','lrirhh[]',true);
+insert into users values ('rania', '900000','jfir', 'reiii' , 'nada863@gmail','946664','lrirhh[]',false);
+insert into users values ('mady', '33','jfir', 'reiii' , 'nada863@gmail','946664','lrirhh[]',false);
+insert into users values ('zozo', '10','jfir', 'reiii' , 'nada863@gmail','946664','lrirhh[]',true);
+insert into bookauthor values ('holms','84465436');
+insert into bookauthor values ('holms','984');
+select Quantity from book where ISBN='84465436';
+select * from orders;
+select * from sales;
+delete from  orders;
+delete from  sales;
+

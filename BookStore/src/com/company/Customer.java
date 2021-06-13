@@ -95,6 +95,39 @@ public class Customer {
 	        }
 		return price;
 	}
+	
+	public List<String> individual_attribute(String ISBN, String attr) {
+		List<String> res = new ArrayList<>();
+		String query="";
+		try {
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "741963654");
+			Statement sta = connection.createStatement();
+			ResultSet myRs = null ;
+			if(attr.equals("author")) {
+				query = "select * from bookauthor natural join book where ISBN ="+"'"+ ISBN +"'"+";";
+				myRs= sta.executeQuery(query);
+				 while (myRs.next()) {
+					 res.add(myRs.getString("AuthorName"));
+					 
+				 }
+			}
+			else {
+				query = "select "+attr +" from book where ISBN = "  + "'" + ISBN+ "'" + ";";
+				
+				 myRs= sta.executeQuery(query);
+				 while (myRs.next()) {
+					 res.add(myRs.getString(attr));
+					 
+				 }
+			}
+			
+			 connection.close();
+			}
+			catch (Exception exception) {
+	            exception.printStackTrace();
+	        }
+		return res;
+	}
 	public long total_price () {
 		long res= 0;
 		try {

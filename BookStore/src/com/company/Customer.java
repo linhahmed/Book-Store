@@ -1,4 +1,4 @@
-package com.company;//package book_store;
+package book_store;
 import java.util.*;
 
 import com.mysql.cj.conf.ConnectionUrlParser.Pair;
@@ -30,10 +30,19 @@ public class Customer {
 	public List<String> search_for_book(String atrr , String val) throws SQLException{
 		List<String> books = new ArrayList<>();
 		try {
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "Hosney4444!");
+		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "741963654");
 		
 		ResultSet myRs = null ;
-		 String query = "select * from book where " +atrr+ " = " + "'" + val+ "'" + ";";
+		String query;
+		if(val.contentEquals("")) {
+			query = "select * from book ;";
+		}
+		else if(atrr.equals("author")) {
+			query = "select * from book natural join bookauthor where " +"AuthorName"+ " = " + "'" + val+ "'" + ";";
+		}
+		else {
+			query = "select * from book where " +atrr+ " = " + "'" + val+ "'" + ";";
+		} 
 		 Statement sta = connection.createStatement();
 		 myRs= sta.executeQuery(query);
 		 
@@ -66,7 +75,7 @@ public class Customer {
 	public int individual_price(String ISBN) {
 		int price =0;
 		try {
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "Hosney4444!");
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "741963654");
 			
 			ResultSet myRs = null ;
 			
@@ -89,7 +98,7 @@ public class Customer {
 	public long total_price () {
 		long res= 0;
 		try {
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "Hosney4444!");
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "741963654");
 			
 			ResultSet myRs = null ;
 			for(int i=0;i<cart.size(); i++) {
@@ -112,7 +121,7 @@ public class Customer {
 	}
 	public void checkout() {
 		try {
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "Hosney4444!");
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "741963654");
 			
 			while(cart.size()>0) {
 				int cartquantity=cart.get(0).right;

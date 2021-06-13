@@ -1,4 +1,4 @@
-package com.company;
+package book_store;
 
 import com.mysql.cj.conf.ConnectionUrlParser.Pair;
 
@@ -174,7 +174,53 @@ public class Manager extends Customer {
 
 
     }
+    public List<String> individual_Userattribute(String userName, String attr) {
+		List<String> res = new ArrayList<>();
+		String query="";
+		try {
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "741963654");
+			Statement sta = connection.createStatement();
+			ResultSet myRs = null ;
+
+				query = "select * from users where userName = "  + "'" + userName+ "'" + ";";
+				
+				 myRs= sta.executeQuery(query);
+				 while (myRs.next()) {
+					 res.add(myRs.getString(attr));
+					 
+				 
+			}
+			
+			 connection.close();
+			}
+			catch (Exception exception) {
+	            exception.printStackTrace();
+	        }
+		return res;
+	}
+    
+    public List<String> all_customers() {
+		List<String> res = new ArrayList<>();
+		String query="";
+		try {
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "741963654");
+			Statement sta = connection.createStatement();
+			ResultSet myRs = null ;
+				query = "select * from users where ismanager = 0;";
+				
+				 myRs= sta.executeQuery(query);
+				 while (myRs.next()) {
+					 res.add(myRs.getString("userName"));
+					 
+				 }
+			
+			 connection.close();
+			}
+			catch (Exception exception) {
+	            exception.printStackTrace();
+	        }
+		return res;
+	}
 
 
 }
-

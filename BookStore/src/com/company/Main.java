@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 public class Main {
 	public static void main(String []args) throws SQLException {
+		/*
 		Customer ob = new Customer();
 		LogIn ob2 = new LogIn();
 		Manager manager =new Manager();
@@ -23,6 +24,7 @@ public class Main {
 			// res= ob.total_price();
 			// price = ob.individual_price("33");
 			 //ob.checkout();
+			 */
 		/*
 		List<ConnectionUrlParser.Pair<String,String>>customers= manager.top_customers();
 		List<List<String>>books= manager.top_selling_books();
@@ -37,6 +39,11 @@ public class Main {
 			System.out.println(aaa.get(i));
 		}*/
 		//System.out.println(log);
-
+		
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+        }
+        SwingUtilities.invokeLater(MainFrame::new);
 	}
 }

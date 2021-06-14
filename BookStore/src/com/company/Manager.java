@@ -141,9 +141,9 @@ public class Manager extends Customer {
 
     }
 
-    public List<String> top_selling_books() {
+    public List<Pair<String, Integer>> top_selling_books() {
         ResultSet myRs = null;
-        List<String> result = new ArrayList<>();
+        List<Pair<String, Integer>> result = new ArrayList<>();
 
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "Hosney4444!");
@@ -152,7 +152,7 @@ public class Manager extends Customer {
             Statement stmt = connection.createStatement();
             myRs = stmt.executeQuery(query);
             while (myRs.next()) {
-                result.add(myRs.getString("ISBN"));
+                result.add(new Pair<String, Integer>(myRs.getString("ISBN"), Integer.parseInt(myRs.getString("sum(num_of_cpies)"))));
             }
             connection.close();
             return result;

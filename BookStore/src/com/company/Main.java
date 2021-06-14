@@ -20,7 +20,7 @@ public class Main {
 			 //aaa =ob.search_for_book("Title", "proceed");
 			// ob.add_item("984",2);
 			 //ob.add_item("33",1);
-			// res= ob .total_price();
+			// res= ob.total_price();
 			// price = ob.individual_price("33");
 			 //ob.checkout();
 		/*

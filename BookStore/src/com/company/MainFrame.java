@@ -1,3 +1,6 @@
+package com.company;
+import com.mysql.cj.conf.ConnectionUrlParser.Pair;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

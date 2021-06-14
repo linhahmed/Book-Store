@@ -93,9 +93,9 @@ public class Manager extends Customer {
 
     }
 
-    public List<Pair<String, String>> top_customers() {
+    public List<Pair<String, Integer>> top_customers() {
         ResultSet myRs = null;
-        List<Pair<String, String>> result = new ArrayList<>();
+        List<Pair<String, Integer>> result = new ArrayList<>();
 
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "Hosney4444!");
@@ -106,7 +106,7 @@ public class Manager extends Customer {
             myRs = stmt.executeQuery(query);
 
             while (myRs.next()) {
-                result.add(new Pair<String, String>(myRs.getString("sum(num_of_cpies)"), myRs.getString("userName")));
+                result.add(new Pair<String, Integer>(myRs.getString("sum(num_of_cpies)"), Integer.parseInt(myRs.getString("userName"))));
             }
             connection.close();
             return result;
@@ -141,9 +141,9 @@ public class Manager extends Customer {
 
     }
 
-    public List<List<String>> top_selling_books() {
+    public List<String> top_selling_books() {
         ResultSet myRs = null;
-        List<List<String>> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
 
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "Hosney4444!");
@@ -152,11 +152,7 @@ public class Manager extends Customer {
             Statement stmt = connection.createStatement();
             myRs = stmt.executeQuery(query);
             while (myRs.next()) {
-                List<String> res = new ArrayList<>();
-                res.add(myRs.getString("sum(num_of_cpies)"));
-                res.add(myRs.getString("Title"));
-                res.add(myRs.getString("ISBN"));
-                result.add(res);
+                result.add(myRs.getString("ISBN"));
             }
             connection.close();
             return result;
@@ -170,8 +166,8 @@ public class Manager extends Customer {
 
     }
 
-    public List<String> individual_Userattribute(String userName, String attr) {
-        List<String> res = new ArrayList<>();
+    public String individual_Userattribute(String userName, String attr) {
+        String res = "";
         String query = "";
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "741963654");
@@ -181,7 +177,7 @@ public class Manager extends Customer {
             query = "select * from users where userName = " + "'" + userName + "'" + ";";
             myRs = sta.executeQuery(query);
             while (myRs.next()) {
-                res.add(myRs.getString(attr));
+                res+=myRs.getString(attr);
             }
 
             connection.close();

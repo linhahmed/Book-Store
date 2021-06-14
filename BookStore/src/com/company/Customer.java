@@ -100,8 +100,8 @@ public class Customer {
 		return price;
 	}
 	
-	public List<String> individual_attribute(String ISBN, String attr) {
-		List<String> res = new ArrayList<>();
+	public String individual_attribute(String ISBN, String attr) {
+		String res ="";
 		String query="";
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "741963654");
@@ -111,17 +111,19 @@ public class Customer {
 				query = "select * from bookauthor natural join book where ISBN ="+"'"+ ISBN +"'"+";";
 				myRs= sta.executeQuery(query);
 				 while (myRs.next()) {
-					 res.add(myRs.getString("AuthorName"));
+					 res+=myRs.getString("AuthorName");
+					 res+=",";
 					 
 				 }
+				 res = res.substring(0,res.length()-1);
 			}
 			else {
 				query = "select "+attr +" from book where ISBN = "  + "'" + ISBN+ "'" + ";";
 				
 				 myRs= sta.executeQuery(query);
 				 while (myRs.next()) {
-					 res.add(myRs.getString(attr));
-					 
+					 res+=myRs.getString(attr);
+
 				 }
 			}
 			
@@ -183,6 +185,8 @@ public class Customer {
 
 	
 	public void log_out() {
+
+		username= "";
 		cart.clear();
 	}
 	
